@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Naver News Crawling</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>네이버 뉴스 실시간 헤드라인</h1>
+    </hr>
+    <div id="news-box">
+        <table id="table">
+            <tr><td>언론사</td><td>기사제목</td><td>기사 작성일</td></tr>
+        </table>
+    </div>
+    <script>
+        const eventSource = new EventSource("http://localhost:8080/naverNews");
+        eventSource.onmessage = function(event) {
+            
+            naverNews = JSON.parse(event.data);
+            console.log(naverNews);
+
+            $("#table").append("<tr><td>" + naverNews.company + "</td><td>" + naverNews.title + "</td><td>" + naverNews.createdAt + "</td></tr>");
+        }
+    </script>
+</body>
+</html>
